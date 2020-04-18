@@ -30,6 +30,15 @@ public class DataLoader implements CommandLineRunner {
 
         System.out.println("### " + ownerService.findById(1L) + " ###");
 
+        owner.setId(3L);
+        owner.setFirstName("Intell");
+        owner.setLastName("Jackson");
+
+        ownerService.save(owner);
+
+        System.out.println("### " + ownerService.findById(3L) + " ###");
+        System.out.println("###  " + ownerService.findAll() + " ###");
+
         Vet vet = new Vet();
         vet.setId(2L);
         vet.setFirstName("Log");
@@ -38,5 +47,14 @@ public class DataLoader implements CommandLineRunner {
         vetService.save(vet);
 
         System.out.println("### " + vetService.findById(2L) + " ###");
+
+        vet.setId(4L);
+        vet.setFirstName("Job");
+        vet.setLastName("Less");
+
+        vetService.save(vet);
+
+        System.out.println("### " + vetService.findById(4L) + " ###");
+        System.out.println("###  " + vetService.findAll() + " ###");
     }
 }
