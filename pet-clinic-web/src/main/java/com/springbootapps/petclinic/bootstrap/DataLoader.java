@@ -22,39 +22,31 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) {
         Owner owner = new Owner();
-        owner.setId(1L);
         owner.setFirstName("Leo");
         owner.setLastName("Novo");
 
         ownerService.save(owner);
 
-        System.out.println("### " + ownerService.findById(1L) + " ###");
+        Owner owner1 = new Owner();
+        owner1.setFirstName("Intell");
+        owner1.setLastName("Jackson");
 
-        owner.setId(3L);
-        owner.setFirstName("Intell");
-        owner.setLastName("Jackson");
+        ownerService.save(owner1);
 
-        ownerService.save(owner);
-
-        System.out.println("### " + ownerService.findById(3L) + " ###");
         System.out.println("###  " + ownerService.findAll() + " ###");
 
         Vet vet = new Vet();
-        vet.setId(2L);
         vet.setFirstName("Log");
         vet.setLastName("Tech");
 
         vetService.save(vet);
 
-        System.out.println("### " + vetService.findById(2L) + " ###");
+        Vet vet1 = new Vet();
+        vet1.setFirstName("Job");
+        vet1.setLastName("Less");
 
-        vet.setId(4L);
-        vet.setFirstName("Job");
-        vet.setLastName("Less");
+        vetService.save(vet1);
 
-        vetService.save(vet);
-
-        System.out.println("### " + vetService.findById(4L) + " ###");
         System.out.println("###  " + vetService.findAll() + " ###");
     }
 }

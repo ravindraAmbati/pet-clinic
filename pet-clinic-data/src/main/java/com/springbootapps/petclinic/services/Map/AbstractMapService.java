@@ -1,22 +1,30 @@
 package com.springbootapps.petclinic.services.Map;
 
-import java.util.HashMap;
-import java.util.Set;
+import com.springbootapps.petclinic.model.BaseEntity;
 
-public abstract class AbstractMapService<T, ID> {
+import java.util.*;
 
-    private HashMap<ID, T> map = new HashMap<>();
+public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> {
+
+    protected HashMap<Long, T> map = new HashMap<>();
 
     T findById(ID id) {
         return map.get(id);
     }
 
     Set<T> findAll() {
-        return (Set<T>) map.entrySet();
+        return new HashSet<>(map.values());
     }
 
-    T save(ID id, T obj) {
-        return map.put(id, obj);
+    T save(T obj) {
+        if (null != obj) {
+            if (null == obj.getId()) {
+                obj.setId(getNextId());
+            }
+            return map.put(obj.getId(), obj);
+        } else {
+            throw new RuntimeException("Object cannot be null");
+        }
     }
 
     void delete(T obj) {
@@ -24,7 +32,18 @@ public abstract class AbstractMapService<T, ID> {
     }
 
     void deleteById(ID id) {
-        map.entrySet().removeIf(idtEntry -> idtEntry.equals(findById(id)));
+        map.entrySet().removeIf(idtEntry -> idtEntry.getValue().equals(findById(id)));
+    }
+
+    private Long getNextId() {
+        Long nextId = 0L;
+        try {
+            nextId = Collections.max(map.keySet()) + 1;
+        } catch (NoSuchElementException nsee) {
+            nextId++;
+            System.out.println(nsee.getStackTrace());
+        }
+        return nextId;
     }
 
 }
