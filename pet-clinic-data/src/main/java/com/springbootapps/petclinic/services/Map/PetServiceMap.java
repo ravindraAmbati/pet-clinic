@@ -1,11 +1,12 @@
 package com.springbootapps.petclinic.services.Map;
 
 import com.springbootapps.petclinic.model.Pet;
-import com.springbootapps.petclinic.services.CrudService;
+import com.springbootapps.petclinic.model.PetType;
+import com.springbootapps.petclinic.services.PetService;
 
 import java.util.Set;
 
-public class PetServiceMap extends AbstractMapService<Pet, Long> implements CrudService<Pet, Long> {
+public class PetServiceMap extends AbstractMapService<Pet, Long> implements PetService {
     @Override
     public Pet findById(Long id) {
         return super.findById(id);
@@ -29,5 +30,10 @@ public class PetServiceMap extends AbstractMapService<Pet, Long> implements Crud
     @Override
     public Pet save(Pet obj) {
         return super.save(obj.getId(), obj);
+    }
+
+    @Override
+    public Pet findByPetType(PetType petType) {
+        throw new UnsupportedOperationException("findByLastName() is not supported");
     }
 }

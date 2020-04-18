@@ -1,11 +1,11 @@
 package com.springbootapps.petclinic.services.Map;
 
 import com.springbootapps.petclinic.model.Owner;
-import com.springbootapps.petclinic.services.CrudService;
+import com.springbootapps.petclinic.services.OwnerService;
 
 import java.util.Set;
 
-public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements CrudService<Owner, Long> {
+public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements OwnerService {
     @Override
     public Owner findById(Long id) {
         return super.findById(id);
@@ -29,5 +29,10 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
     @Override
     public Owner save(Owner obj) {
         return super.save(obj.getId(), obj);
+    }
+
+    @Override
+    public Owner findByLastName(String lastName) {
+        throw new UnsupportedOperationException("findByLastName() is not supported");
     }
 }
