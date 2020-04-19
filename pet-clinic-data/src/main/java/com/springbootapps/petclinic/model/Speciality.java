@@ -1,6 +1,6 @@
 package com.springbootapps.petclinic.model;
 
-public class Specialist extends BaseEntity {
+public class Speciality extends BaseEntity {
 
     private String description;
 
