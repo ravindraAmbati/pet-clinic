@@ -1,13 +1,7 @@
 package com.springbootapps.petclinic.bootstrap;
 
-import com.springbootapps.petclinic.model.Owner;
-import com.springbootapps.petclinic.model.Pet;
-import com.springbootapps.petclinic.model.PetType;
-import com.springbootapps.petclinic.model.Vet;
-import com.springbootapps.petclinic.services.OwnerService;
-import com.springbootapps.petclinic.services.PetService;
-import com.springbootapps.petclinic.services.PetTypeService;
-import com.springbootapps.petclinic.services.VetService;
+import com.springbootapps.petclinic.model.*;
+import com.springbootapps.petclinic.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -21,12 +15,14 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final PetService petService;
     private final PetTypeService petTypeService;
+    private final SpecialityService specialityService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetService petService, PetTypeService petTypeService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetService petService, PetTypeService petTypeService, SpecialityService specialityService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petService = petService;
         this.petTypeService = petTypeService;
+        this.specialityService = specialityService;
     }
 
     @Override
@@ -69,19 +65,34 @@ public class DataLoader implements CommandLineRunner {
         owner.setPets(pets2);
         pet1.setOwner(owner1);
 
+        Speciality speciality = new Speciality();
+        speciality.setDescription("Specialist in PetType of " + dog.getName());
+
+        Speciality speciality1 = new Speciality();
+        speciality1.setDescription("Specialist in PetType of " + cat.getName());
+
         Vet vet = new Vet();
         vet.setFirstName("Log");
         vet.setLastName("Tech");
+        HashSet<Speciality> specialities = new HashSet<>();
+        specialities.add(speciality1);
+        vet.setSpecialities(specialities);
 
         Vet vet1 = new Vet();
         vet1.setFirstName("Job");
         vet1.setLastName("Less");
+        HashSet<Speciality> specialities1 = new HashSet<>();
+        specialities1.add(speciality);
+        vet.setSpecialities(specialities1);
 
         ownerService.save(owner);
         ownerService.save(owner1);
 
         vetService.save(vet);
         vetService.save(vet1);
+
+        specialityService.save(speciality);
+        specialityService.save(speciality1);
 
         petTypeService.save(dog);
         petTypeService.save(cat);
@@ -90,6 +101,7 @@ public class DataLoader implements CommandLineRunner {
         petService.save(pet1);
 
         System.out.println("###  " + ownerService.findAll() + " ###");
+        System.out.println("###  " + specialityService.findAll() + " ###");
         System.out.println("###  " + vetService.findAll() + " ###");
         System.out.println("###  " + petService.findAll() + " ###");
         System.out.println("###  " + petTypeService.findAll() + " ###");
