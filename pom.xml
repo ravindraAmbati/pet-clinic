@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-    <packaging>pom</packaging>
-    <modules>
-        <module>pet-clinic-data</module>
+
+	<artifactId>pet-clinic</artifactId>
+	<groupId>com.springbootapps</groupId>
+	<version>0.0.2-SNAPSHOT</version>
+
+	<modules>
+		<module>pet-clinic-data</module>
 		<module>pet-clinic-web</module>
 	</modules>
-    <parent>
+
+	<packaging>pom</packaging>
+
+	<name>pet-clinic</name>
+	<description>Pet Clinic Project</description>
+
+	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.6.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.springbootapps</groupId>
-	<artifactId>pet-clinic</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
-	<name>pet-clinic</name>
-	<description>Spring Boot App - Pet Clinic</description>
 
 	<properties>
 		<java.version>1.8</java.version>
