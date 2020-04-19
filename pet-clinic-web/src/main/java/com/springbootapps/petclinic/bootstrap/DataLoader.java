@@ -62,7 +62,7 @@ public class DataLoader implements CommandLineRunner {
         owner1.setTelephone("+1 326548970");
         HashSet<Pet> pets2 = new HashSet<>();
         pets2.add(pet2);
-        owner.setPets(pets2);
+        owner1.setPets(pets2);
         pet1.setOwner(owner1);
 
         Speciality speciality = new Speciality();
@@ -83,7 +83,7 @@ public class DataLoader implements CommandLineRunner {
         vet1.setLastName("Less");
         HashSet<Speciality> specialities1 = new HashSet<>();
         specialities1.add(speciality);
-        vet.setSpecialities(specialities1);
+        vet1.setSpecialities(specialities1);
 
         ownerService.save(owner);
         ownerService.save(owner1);
