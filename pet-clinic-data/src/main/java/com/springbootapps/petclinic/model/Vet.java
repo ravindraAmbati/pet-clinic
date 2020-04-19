@@ -13,4 +13,11 @@ public class Vet extends Person {
     public void setSpecialities(Set<Speciality> specialities) {
         this.specialities = specialities;
     }
+
+    @Override
+    public String toString() {
+        return "Vet{" +
+                "specialities=" + specialities +
+                "} " + super.toString();
+    }
 }

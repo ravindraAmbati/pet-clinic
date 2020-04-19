@@ -40,4 +40,14 @@ public class Owner extends Person {
     public void setPets(Set<Pet> pets) {
         this.pets = pets;
     }
+
+    @Override
+    public String toString() {
+        return "Owner{" +
+                "address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", pets=" + pets +
+                "} " + super.toString();
+    }
 }
