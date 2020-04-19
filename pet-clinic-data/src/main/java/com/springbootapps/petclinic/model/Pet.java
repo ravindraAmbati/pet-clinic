@@ -39,7 +39,6 @@ public class Pet extends BaseEntity{
     public String toString() {
         return "Pet{" +
                 "petType=" + petType +
-                ", owner=" + owner +
                 ", birthDate=" + birthDate +
                 '}';
     }
