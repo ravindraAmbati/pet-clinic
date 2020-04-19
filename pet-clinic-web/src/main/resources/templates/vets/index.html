@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Pet Clinic - Vets</title>
-</head>
+
+<html th:replace="~{fragments/layout :: layout (~{::body},'vets')}"
+      xmlns:th="https://www.thymeleaf.org">
+
 <body>
-<!--/*@thymesVar id="vet" type="guru.springframework.sfgpetclinic.model.Vet"*/-->
-<h1 th:text="'List of Vets'">Vets List</h1>
-<table>
+
+<h2>Veterinarians</h2>
+
+<table class="table table-striped" id="vets">
     <thead>
     <tr>
-        <th>Id</th>
+        <th>ID</th>
         <th>First Name</th>
         <th>Last Name</th>
     </tr>
