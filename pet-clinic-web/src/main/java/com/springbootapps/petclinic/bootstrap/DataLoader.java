@@ -31,7 +31,7 @@ public class DataLoader implements CommandLineRunner {
         dog.setName("Dog");
 
         PetType cat = new PetType();
-        cat.setName("Dog");
+        cat.setName("Cat");
 
         Pet pet1 = new Pet();
 
@@ -66,16 +66,20 @@ public class DataLoader implements CommandLineRunner {
         pet1.setOwner(owner1);
 
         Speciality speciality = new Speciality();
-        speciality.setDescription("Specialist in PetType of " + dog.getName());
+        speciality.setDescription("radiology");
 
         Speciality speciality1 = new Speciality();
-        speciality1.setDescription("Specialist in PetType of " + cat.getName());
+        speciality1.setDescription("surgeon");
+
+        Speciality speciality2 = new Speciality();
+        speciality2.setDescription("densist");
 
         Vet vet = new Vet();
         vet.setFirstName("Log");
         vet.setLastName("Tech");
         HashSet<Speciality> specialities = new HashSet<>();
         specialities.add(speciality1);
+        specialities.add(speciality2);
         vet.setSpecialities(specialities);
 
         Vet vet1 = new Vet();
@@ -98,7 +102,7 @@ public class DataLoader implements CommandLineRunner {
         petTypeService.save(cat);
 
         petService.save(pet1);
-        petService.save(pet1);
+        petService.save(pet2);
 
         System.out.println("###  " + ownerService.findAll() + " ###");
         System.out.println("###  " + specialityService.findAll() + " ###");
