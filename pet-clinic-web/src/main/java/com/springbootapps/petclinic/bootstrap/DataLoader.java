@@ -58,7 +58,7 @@ public class DataLoader implements CommandLineRunner {
         owner1.setFirstName("Intell");
         owner1.setLastName("Jackson");
         owner1.setAddress("Wall Street #2");
-        owner.setCity("New York");
+        owner1.setCity("New York");
         owner1.setTelephone("+1 326548970");
         HashSet<Pet> pets2 = new HashSet<>();
         pets2.add(pet2);
