@@ -4,7 +4,7 @@ import com.springbootapps.petclinic.model.BaseEntity;
 
 import java.util.*;
 
-public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> {
+public abstract class AbstractMapRepository<T extends BaseEntity, ID extends Long> {
 
     protected HashMap<Long, T> map = new HashMap<>();
 
