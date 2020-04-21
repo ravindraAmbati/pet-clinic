@@ -1,14 +1,32 @@
 package com.springbootapps.petclinic.model;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
-public class Pet extends BaseEntity{
+@Entity
+@Table(name = "pets")
+public class Pet extends BaseEntity {
 
+    @Column(name = "name")
+    private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "type_id")
     private PetType petType;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
     private Owner owner;
+
+    @Column(name = "birth_date")
     private LocalDate birthDate;
 
-    public Pet() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public PetType getPetType() {
@@ -38,8 +56,10 @@ public class Pet extends BaseEntity{
     @Override
     public String toString() {
         return "Pet{" +
-                "petType=" + petType +
+                "name='" + name + '\'' +
+                ", petType=" + petType +
+                ", owner=" + owner +
                 ", birthDate=" + birthDate +
-                '}';
+                "} " + super.toString();
     }
 }
