@@ -46,4 +46,8 @@ public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> 
         return nextId;
     }
 
+    public int getSize() {
+        return this.map.size();
+    }
+
 }

@@ -37,4 +37,8 @@ public class PetTypeServiceMap extends AbstractMapService<PetType, Long> impleme
     public PetType findByName(String name) {
         throw new UnsupportedOperationException("this service is not implemented yet");
     }
+
+    public int getSize() {
+        return super.getSize();
+    }
 }

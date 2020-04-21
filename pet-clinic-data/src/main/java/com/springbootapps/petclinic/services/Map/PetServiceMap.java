@@ -47,4 +47,8 @@ public class PetServiceMap extends AbstractMapService<Pet, Long> implements PetS
     public Pet findByPetType(PetType petType) {
         throw new UnsupportedOperationException("findByLastName() is not supported");
     }
+
+    public int getSize() {
+        return super.getSize();
+    }
 }

@@ -32,4 +32,8 @@ public class SpecialityServiceMap extends AbstractMapService<Speciality, Long> i
     public Speciality save(Speciality obj) {
         return super.save(obj);
     }
+
+    public int getSize() {
+        return super.getSize();
+    }
 }

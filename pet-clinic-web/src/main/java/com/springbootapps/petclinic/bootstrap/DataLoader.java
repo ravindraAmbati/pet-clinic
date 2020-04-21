@@ -35,13 +35,27 @@ public class DataLoader implements CommandLineRunner {
 
         Pet pet1 = new Pet();
 
+        pet1.setName("Dog Bark");
         pet1.setPetType(dog);
         pet1.setBirthDate(LocalDate.of(2010, 10, 10));
 
         Pet pet2 = new Pet();
 
+        pet2.setName("Cat Meow");
         pet2.setPetType(cat);
         pet2.setBirthDate(LocalDate.of(2018, 8, 12));
+
+        Pet pet3 = new Pet();
+
+        pet3.setName("Jimmy Bark");
+        pet3.setPetType(dog);
+        pet3.setBirthDate(LocalDate.of(2020, 1, 10));
+
+        Pet pet4 = new Pet();
+
+        pet4.setName("Mimmy Meow");
+        pet4.setPetType(cat);
+        pet4.setBirthDate(LocalDate.of(2019, 3, 31));
 
         Owner owner = new Owner();
         owner.setFirstName("Leo");
@@ -51,8 +65,8 @@ public class DataLoader implements CommandLineRunner {
         owner.setTelephone("+11 987456320");
         HashSet<Pet> pets1 = new HashSet<>();
         pets1.add(pet1);
+        pets1.add(pet4);
         owner.setPets(pets1);
-        pet2.setOwner(owner);
 
         Owner owner1 = new Owner();
         owner1.setFirstName("Intell");
@@ -62,17 +76,20 @@ public class DataLoader implements CommandLineRunner {
         owner1.setTelephone("+1 326548970");
         HashSet<Pet> pets2 = new HashSet<>();
         pets2.add(pet2);
+        pets2.add(pet3);
         owner1.setPets(pets2);
-        pet1.setOwner(owner1);
-
-        Speciality speciality = new Speciality();
-        speciality.setDescription("radiology");
 
         Speciality speciality1 = new Speciality();
-        speciality1.setDescription("surgeon");
+        speciality1.setDescription("Radiology");
 
         Speciality speciality2 = new Speciality();
-        speciality2.setDescription("densist");
+        speciality2.setDescription("Surgeon");
+
+        Speciality speciality3 = new Speciality();
+        speciality3.setDescription("Dentist");
+
+        Speciality speciality4 = new Speciality();
+        speciality4.setDescription("Endoscopist");
 
         Vet vet = new Vet();
         vet.setFirstName("Log");
@@ -86,29 +103,24 @@ public class DataLoader implements CommandLineRunner {
         vet1.setFirstName("Job");
         vet1.setLastName("Less");
         HashSet<Speciality> specialities1 = new HashSet<>();
-        specialities1.add(speciality);
+        specialities1.add(speciality3);
+        specialities1.add(speciality4);
         vet1.setSpecialities(specialities1);
 
+
+        //Pet and PetTypes will be get saved along with Owners
         ownerService.save(owner);
         ownerService.save(owner1);
 
+        // Specialists will be get saved along with Vets
         vetService.save(vet);
         vetService.save(vet1);
 
-        specialityService.save(speciality);
-        specialityService.save(speciality1);
-
-        petTypeService.save(dog);
-        petTypeService.save(cat);
-
-        petService.save(pet1);
-        petService.save(pet2);
-
-        System.out.println("###  " + ownerService.findAll() + " ###");
-        System.out.println("###  " + specialityService.findAll() + " ###");
-        System.out.println("###  " + vetService.findAll() + " ###");
-        System.out.println("###  " + petService.findAll() + " ###");
-        System.out.println("###  " + petTypeService.findAll() + " ###");
+        System.out.println("### " + ownerService.getSize() + " ###  " + ownerService.findAll() + " ###");
+        System.out.println("### " + specialityService.getSize() + " ###  " + specialityService.findAll() + " ###");
+        System.out.println("### " + vetService.getSize() + " ###  " + vetService.findAll() + " ###");
+        System.out.println("### " + petService.getSize() + " ###  " + petService.findAll() + " ###");
+        System.out.println("### " + petTypeService.getSize() + " ###  " + petTypeService.findAll() + " ###");
 
     }
 }

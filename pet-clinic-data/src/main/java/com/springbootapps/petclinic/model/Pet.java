@@ -47,6 +47,9 @@ public class Pet extends BaseEntity {
     }
 
     public void setOwner(Owner owner) {
+        HashSet<Pet> pets = new HashSet<>(1);
+        pets.add(this);
+        owner.setPets(pets);
         this.owner = owner;
     }
 
@@ -71,7 +74,6 @@ public class Pet extends BaseEntity {
         return "Pet{" +
                 "name='" + name + '\'' +
                 ", petType=" + petType +
-                ", owner=" + owner +
                 ", birthDate=" + birthDate +
                 ", visits=" + visits +
                 "} " + super.toString();

@@ -13,4 +13,6 @@ public interface CrudService<T, ID> {
     void delete(T obj);
 
     void deleteById(ID id);
+
+    int getSize();
 }
