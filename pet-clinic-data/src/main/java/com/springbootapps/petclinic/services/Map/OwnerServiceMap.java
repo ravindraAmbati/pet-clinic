@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
-@Profile("mapService")
+@Profile({"default", "mapService"})
 @Service
 public class OwnerServiceMap extends AbstractMapRepository<Owner, Long> implements OwnerService {
 

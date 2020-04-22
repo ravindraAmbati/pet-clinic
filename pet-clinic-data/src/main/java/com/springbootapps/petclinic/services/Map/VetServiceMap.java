@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
-@Profile("mapService")
+@Profile({"default", "mapService"})
 @Service
 public class VetServiceMap extends AbstractMapRepository<Vet, Long> implements VetService {
 
