@@ -126,15 +126,11 @@ public class DataLoader implements CommandLineRunner {
         visit4.setDate(LocalDate.of(2020, 04, 04));
         visit4.setPet(pet4);
 
-
-        //Pet and PetTypes will be get saved along with Owners
-        ownerService.save(owner);
-        ownerService.save(owner1);
-
         // Specialists will be get saved along with Vets
         vetService.save(vet);
         vetService.save(vet1);
 
+        // Owner will be get saved along with Visit (Pet and PetTypes will be get saved along with Owners)
         visitService.save(visit1);
         visitService.save(visit2);
         visitService.save(visit3);

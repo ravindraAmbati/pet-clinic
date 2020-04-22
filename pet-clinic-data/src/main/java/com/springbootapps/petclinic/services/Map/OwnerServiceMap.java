@@ -52,11 +52,20 @@ public class OwnerServiceMap extends AbstractMapRepository<Owner, Long> implemen
                         if (null != pet) {
                             if (null != pet.getPetType()) {
                                 PetType tempPetType = pet.getPetType();
-                                petTypeService.save(tempPetType);
+                                if (null == tempPetType.getId()) {
+                                    petTypeService.save(tempPetType);
+                                } else {
+                                    System.out.println(" Pet Type is already exits with id " + tempPetType.getId());
+                                }
                             } else {
                                 throw new RuntimeException("At least of one PetType is mandatory");
                             }
-                            petService.save(pet);
+                            if (null == pet.getId()) {
+                                petService.save(pet);
+                            } else {
+                                System.out.println(" Pet is already exits with id " + pet.getId());
+                            }
+
                         } else {
                             throw new RuntimeException("Pet must not be null");
                         }
