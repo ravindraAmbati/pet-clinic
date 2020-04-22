@@ -40,7 +40,7 @@ public class PetTypeServiceMap extends AbstractMapRepository<PetType, Long> impl
         throw new UnsupportedOperationException("this service is not implemented yet");
     }
 
-    public int getSize() {
-        return super.getSize();
+    public long count() {
+        return super.count();
     }
 }

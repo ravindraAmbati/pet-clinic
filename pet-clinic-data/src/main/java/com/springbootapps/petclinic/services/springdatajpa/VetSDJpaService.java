@@ -1,6 +1,7 @@
 package com.springbootapps.petclinic.services.springdatajpa;
 
 import com.springbootapps.petclinic.model.Vet;
+import com.springbootapps.petclinic.repositories.SpecialityRepository;
 import com.springbootapps.petclinic.repositories.VetRepository;
 import com.springbootapps.petclinic.services.VetService;
 import org.springframework.context.annotation.Profile;
@@ -15,9 +16,11 @@ import java.util.Set;
 public class VetSDJpaService implements VetService {
 
     private final VetRepository vetRepository;
+    private final SpecialityRepository specialityRepository;
 
-    public VetSDJpaService(VetRepository vetRepository) {
+    public VetSDJpaService(VetRepository vetRepository, SpecialityRepository specialityRepository) {
         this.vetRepository = vetRepository;
+        this.specialityRepository = specialityRepository;
     }
 
 
@@ -35,6 +38,19 @@ public class VetSDJpaService implements VetService {
 
     @Override
     public Vet save(Vet obj) {
+        if (null != obj) {
+            obj.getSpecialities().forEach(speciality -> {
+                if (null != speciality) {
+                    if (null == speciality.getId()) {
+                        specialityRepository.save(speciality);
+                    }
+                } else {
+                    throw new RuntimeException("Speciality must not be null");
+                }
+            });
+        } else {
+            throw new RuntimeException("Vet must not be null");
+        }
         return vetRepository.save(obj);
     }
 
@@ -49,7 +65,7 @@ public class VetSDJpaService implements VetService {
     }
 
     @Override
-    public int getSize() {
-        return (int) vetRepository.count();
+    public long count() {
+        return vetRepository.count();
     }
 }

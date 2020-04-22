@@ -137,12 +137,12 @@ public class DataLoader implements CommandLineRunner {
         visitService.save(visit4);
 
 
-        System.out.println("### " + ownerService.getSize() + " ###  " + ownerService.findAll() + " ###");
-        System.out.println("### " + specialityService.getSize() + " ###  " + specialityService.findAll() + " ###");
-        System.out.println("### " + vetService.getSize() + " ###  " + vetService.findAll() + " ###");
-        System.out.println("### " + petService.getSize() + " ###  " + petService.findAll() + " ###");
-        System.out.println("### " + petTypeService.getSize() + " ###  " + petTypeService.findAll() + " ###");
-        System.out.println("### " + visitService.getSize() + " ###  " + visitService.findAll() + " ###");
+        System.out.println("### " + ownerService.count() + " ###  " + ownerService.findAll() + " ###");
+        System.out.println("### " + specialityService.count() + " ###  " + specialityService.findAll() + " ###");
+        System.out.println("### " + vetService.count() + " ###  " + vetService.findAll() + " ###");
+        System.out.println("### " + petService.count() + " ###  " + petService.findAll() + " ###");
+        System.out.println("### " + petTypeService.count() + " ###  " + petTypeService.findAll() + " ###");
+        System.out.println("### " + visitService.count() + " ###  " + visitService.findAll() + " ###");
 
     }
 }

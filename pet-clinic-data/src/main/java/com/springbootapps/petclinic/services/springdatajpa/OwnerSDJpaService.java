@@ -1,16 +1,14 @@
 package com.springbootapps.petclinic.services.springdatajpa;
 
 import com.springbootapps.petclinic.model.Owner;
-import com.springbootapps.petclinic.model.Pet;
 import com.springbootapps.petclinic.repositories.OwnerRepository;
-import com.springbootapps.petclinic.repositories.PetRepository;
-import com.springbootapps.petclinic.repositories.PetTypeRepository;
 import com.springbootapps.petclinic.services.OwnerService;
+import com.springbootapps.petclinic.services.PetService;
+import com.springbootapps.petclinic.services.PetTypeService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 @Service
@@ -18,13 +16,13 @@ import java.util.Set;
 public class OwnerSDJpaService implements OwnerService {
 
     private final OwnerRepository ownerRepository;
-    private final PetRepository petRepository;
-    private final PetTypeRepository petTypeRepository;
+    private final PetService petService;
+    private final PetTypeService petTypeService;
 
-    public OwnerSDJpaService(OwnerRepository ownerRepository, PetRepository petRepository, PetTypeRepository petTypeRepository) {
+    public OwnerSDJpaService(OwnerRepository ownerRepository, PetService petService, PetTypeService petTypeService) {
         this.ownerRepository = ownerRepository;
-        this.petRepository = petRepository;
-        this.petTypeRepository = petTypeRepository;
+        this.petService = petService;
+        this.petTypeService = petTypeService;
     }
 
     @Override
@@ -47,13 +45,25 @@ public class OwnerSDJpaService implements OwnerService {
     @Override
     public Owner save(Owner obj) {
         obj.getPets().forEach(pet -> {
-            petTypeRepository.save(pet.getPetType());
+            if (null == pet.getPetType().getId()) {
+                petTypeService.save(pet.getPetType());
+            } else {
+                if (null != petTypeService.findById(pet.getPetType().getId())) {
+                    System.out.println("Pet Type is already exists with id " + pet.getPetType().getId());
+                } else {
+                    System.out.println("this Pet Type is not able to persist");
+                }
+            }
+            if (null == pet.getId()) {
+                petService.save(pet);
+            } else {
+                if (null != petService.findById(pet.getId())) {
+                    System.out.println("Pet is already exists with id " + pet.getId());
+                } else {
+                    System.out.println("this Pet is not able to persist");
+                }
+            }
         });
-        Iterator<Pet> iterator = obj.getPets().iterator();
-        while (iterator.hasNext()) {
-            Pet tempPet = (Pet) iterator.next();
-            petRepository.save(tempPet);
-        }
         return ownerRepository.save(obj);
     }
 
@@ -68,7 +78,7 @@ public class OwnerSDJpaService implements OwnerService {
     }
 
     @Override
-    public int getSize() {
-        return (int) ownerRepository.count();
+    public long count() {
+        return ownerRepository.count();
     }
 }

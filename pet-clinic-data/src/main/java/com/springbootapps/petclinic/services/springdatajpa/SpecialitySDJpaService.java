@@ -47,7 +47,7 @@ public class SpecialitySDJpaService implements SpecialityService {
     }
 
     @Override
-    public int getSize() {
-        return (int) specialityRepository.count();
+    public long count() {
+        return specialityRepository.count();
     }
 }

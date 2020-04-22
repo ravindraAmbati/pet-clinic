@@ -46,7 +46,7 @@ public abstract class AbstractMapRepository<T extends BaseEntity, ID extends Lon
         return nextId;
     }
 
-    public int getSize() {
+    public long count() {
         return this.map.size();
     }
 

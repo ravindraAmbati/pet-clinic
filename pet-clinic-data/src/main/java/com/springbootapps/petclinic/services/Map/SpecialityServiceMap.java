@@ -35,7 +35,7 @@ public class SpecialityServiceMap extends AbstractMapRepository<Speciality, Long
         return super.save(obj);
     }
 
-    public int getSize() {
-        return super.getSize();
+    public long count() {
+        return super.count();
     }
 }

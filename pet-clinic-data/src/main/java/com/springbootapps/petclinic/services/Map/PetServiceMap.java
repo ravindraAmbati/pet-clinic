@@ -50,7 +50,7 @@ public class PetServiceMap extends AbstractMapRepository<Pet, Long> implements P
         throw new UnsupportedOperationException("findByLastName() is not supported");
     }
 
-    public int getSize() {
-        return super.getSize();
+    public long count() {
+        return super.count();
     }
 }

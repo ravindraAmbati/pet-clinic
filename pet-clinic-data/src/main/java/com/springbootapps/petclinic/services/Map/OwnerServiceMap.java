@@ -85,7 +85,7 @@ public class OwnerServiceMap extends AbstractMapRepository<Owner, Long> implemen
         throw new UnsupportedOperationException("findByLastName() is not supported");
     }
 
-    public int getSize() {
-        return super.getSize();
+    public long count() {
+        return super.count();
     }
 }

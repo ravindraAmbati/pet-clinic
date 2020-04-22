@@ -52,7 +52,7 @@ public class PetTypeSDJpaService implements PetTypeService {
     }
 
     @Override
-    public int getSize() {
-        return (int) petTypeRepository.count();
+    public long count() {
+        return petTypeRepository.count();
     }
 }

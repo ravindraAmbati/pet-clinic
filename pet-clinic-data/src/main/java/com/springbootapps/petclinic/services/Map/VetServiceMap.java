@@ -60,7 +60,7 @@ public class VetServiceMap extends AbstractMapRepository<Vet, Long> implements V
 
     }
 
-    public int getSize() {
-        return super.getSize();
+    public long count() {
+        return super.count();
     }
 }

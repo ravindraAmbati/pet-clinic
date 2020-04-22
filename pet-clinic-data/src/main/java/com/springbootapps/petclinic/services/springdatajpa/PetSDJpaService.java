@@ -2,6 +2,7 @@ package com.springbootapps.petclinic.services.springdatajpa;
 
 import com.springbootapps.petclinic.model.Pet;
 import com.springbootapps.petclinic.model.PetType;
+import com.springbootapps.petclinic.repositories.OwnerRepository;
 import com.springbootapps.petclinic.repositories.PetRepository;
 import com.springbootapps.petclinic.services.PetService;
 import org.springframework.context.annotation.Profile;
@@ -15,9 +16,11 @@ import java.util.Set;
 public class PetSDJpaService implements PetService {
 
     private final PetRepository petRepository;
+    private final OwnerRepository ownerRepository;
 
-    public PetSDJpaService(PetRepository petRepository) {
+    public PetSDJpaService(PetRepository petRepository, OwnerRepository ownerRepository) {
         this.petRepository = petRepository;
+        this.ownerRepository = ownerRepository;
     }
 
     @Override
@@ -53,7 +56,7 @@ public class PetSDJpaService implements PetService {
     }
 
     @Override
-    public int getSize() {
-        return (int) petRepository.count();
+    public long count() {
+        return petRepository.count();
     }
 }
