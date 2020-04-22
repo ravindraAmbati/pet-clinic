@@ -16,13 +16,15 @@ public class DataLoader implements CommandLineRunner {
     private final PetService petService;
     private final PetTypeService petTypeService;
     private final SpecialityService specialityService;
+    private final VisitService visitService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetService petService, PetTypeService petTypeService, SpecialityService specialityService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetService petService, PetTypeService petTypeService, SpecialityService specialityService, VisitService visitService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petService = petService;
         this.petTypeService = petTypeService;
         this.specialityService = specialityService;
+        this.visitService = visitService;
     }
 
     @Override
@@ -108,6 +110,23 @@ public class DataLoader implements CommandLineRunner {
         vet1.setSpecialities(specialities1);
 
 
+        Visit visit1 = new Visit();
+        visit1.setDate(LocalDate.of(2020, 04, 01));
+        visit1.setPet(pet1);
+
+        Visit visit2 = new Visit();
+        visit2.setDate(LocalDate.of(2020, 04, 02));
+        visit2.setPet(pet2);
+
+        Visit visit3 = new Visit();
+        visit3.setDate(LocalDate.of(2020, 04, 03));
+        visit3.setPet(pet3);
+
+        Visit visit4 = new Visit();
+        visit4.setDate(LocalDate.of(2020, 04, 04));
+        visit4.setPet(pet4);
+
+
         //Pet and PetTypes will be get saved along with Owners
         ownerService.save(owner);
         ownerService.save(owner1);
@@ -116,11 +135,18 @@ public class DataLoader implements CommandLineRunner {
         vetService.save(vet);
         vetService.save(vet1);
 
+        visitService.save(visit1);
+        visitService.save(visit2);
+        visitService.save(visit3);
+        visitService.save(visit4);
+
+
         System.out.println("### " + ownerService.getSize() + " ###  " + ownerService.findAll() + " ###");
         System.out.println("### " + specialityService.getSize() + " ###  " + specialityService.findAll() + " ###");
         System.out.println("### " + vetService.getSize() + " ###  " + vetService.findAll() + " ###");
         System.out.println("### " + petService.getSize() + " ###  " + petService.findAll() + " ###");
         System.out.println("### " + petTypeService.getSize() + " ###  " + petTypeService.findAll() + " ###");
+        System.out.println("### " + visitService.getSize() + " ###  " + visitService.findAll() + " ###");
 
     }
 }

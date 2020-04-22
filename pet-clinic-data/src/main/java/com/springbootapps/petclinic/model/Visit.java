@@ -2,6 +2,7 @@ package com.springbootapps.petclinic.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "visits")
@@ -38,6 +39,8 @@ public class Visit extends BaseEntity {
     }
 
     public void setPet(Pet pet) {
+        HashSet<Visit> singleVisit = new HashSet<>(1);
+        pet.setVisits(singleVisit);
         this.pet = pet;
     }
 
