@@ -36,23 +36,6 @@ public class VisitSDJpaService implements VisitService {
 
     @Override
     public Visit save(Visit obj) {
-        if (null != obj) {
-            if (null != obj.getPet()) {
-                if (null == obj.getPet().getId()) {
-                    if (null != obj.getPet().getOwner()) {
-                        if (null == obj.getPet().getOwner().getId()) {
-                            ownerService.save(obj.getPet().getOwner());
-                        }
-                    } else {
-                        throw new RuntimeException("Owner is must");
-                    }
-                }
-            } else {
-                throw new RuntimeException("Pet is must");
-            }
-        } else {
-            throw new RuntimeException("Visit is must");
-        }
         return visitRepository.save(obj);
     }
 

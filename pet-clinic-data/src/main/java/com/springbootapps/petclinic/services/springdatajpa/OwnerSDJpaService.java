@@ -44,26 +44,6 @@ public class OwnerSDJpaService implements OwnerService {
 
     @Override
     public Owner save(Owner obj) {
-        obj.getPets().forEach(pet -> {
-            if (null == pet.getPetType().getId()) {
-                petTypeService.save(pet.getPetType());
-            } else {
-                if (null != petTypeService.findById(pet.getPetType().getId())) {
-                    System.out.println("Pet Type is already exists with id " + pet.getPetType().getId());
-                } else {
-                    System.out.println("this Pet Type is not able to persist");
-                }
-            }
-            if (null == pet.getId()) {
-                petService.save(pet);
-            } else {
-                if (null != petService.findById(pet.getId())) {
-                    System.out.println("Pet is already exists with id " + pet.getId());
-                } else {
-                    System.out.println("this Pet is not able to persist");
-                }
-            }
-        });
         return ownerRepository.save(obj);
     }
 

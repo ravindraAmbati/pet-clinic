@@ -72,7 +72,6 @@ public class Pet extends BaseEntity {
                 "name='" + name + '\'' +
                 ", petType=" + petType +
                 ", birthDate=" + birthDate +
-                ", visits=" + visits +
                 "} " + super.toString();
     }
 }

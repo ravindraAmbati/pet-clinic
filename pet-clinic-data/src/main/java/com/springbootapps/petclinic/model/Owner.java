@@ -49,7 +49,7 @@ public class Owner extends Person {
     }
 
     public void setPets(Set<Pet> pets) {
-        pets.forEach(pet -> pet.setOwner(this));
+//        pets.forEach(pet -> pet.setOwner(this));
         this.pets = pets;
     }
 

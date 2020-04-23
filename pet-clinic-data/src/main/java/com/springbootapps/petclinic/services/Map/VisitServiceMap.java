@@ -40,25 +40,6 @@ public class VisitServiceMap extends AbstractMapRepository<Visit, Long> implemen
 
     @Override
     public Visit save(Visit obj) {
-        if (null != obj) {
-            if (null != obj.getPet()) {
-                if (null != obj.getPet().getOwner()) {
-                    if (null == obj.getPet().getOwner().getId()) {
-                        ownerService.save(obj.getPet().getOwner());
-                    } else {
-                        System.out.println("Owner is already exists with id " + obj.getPet().getOwner().getId());
-                    }
-                    return super.save(obj);
-                } else {
-                    throw new RuntimeException("Invalid Visit - Owner is required for the pet" + obj.getPet().getName());
-                }
-            } else {
-                throw new RuntimeException("Invalid Visit - Pet is required");
-            }
-        }
-        {
-            throw new RuntimeException("Visit must not be null");
-        }
-
+        return super.save(obj);
     }
 }

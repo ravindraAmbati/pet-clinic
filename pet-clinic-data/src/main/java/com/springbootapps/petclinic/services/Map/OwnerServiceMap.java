@@ -1,7 +1,6 @@
 package com.springbootapps.petclinic.services.Map;
 
 import com.springbootapps.petclinic.model.Owner;
-import com.springbootapps.petclinic.model.PetType;
 import com.springbootapps.petclinic.services.OwnerService;
 import com.springbootapps.petclinic.services.PetService;
 import com.springbootapps.petclinic.services.PetTypeService;
@@ -44,40 +43,7 @@ public class OwnerServiceMap extends AbstractMapRepository<Owner, Long> implemen
 
     @Override
     public Owner save(Owner obj) {
-        if (null != obj) {
-            if (null == obj.getId()) {
-                obj.setId(super.getNextId());
-                if (null != obj.getPets() && obj.getPets().size() > 0) {
-                    obj.getPets().forEach(pet -> {
-                        if (null != pet) {
-                            if (null != pet.getPetType()) {
-                                PetType tempPetType = pet.getPetType();
-                                if (null == tempPetType.getId()) {
-                                    petTypeService.save(tempPetType);
-                                } else {
-                                    System.out.println(" Pet Type is already exits with id " + tempPetType.getId());
-                                }
-                            } else {
-                                throw new RuntimeException("At least of one PetType is mandatory");
-                            }
-                            if (null == pet.getId()) {
-                                petService.save(pet);
-                            } else {
-                                System.out.println(" Pet is already exits with id " + pet.getId());
-                            }
-
-                        } else {
-                            throw new RuntimeException("Pet must not be null");
-                        }
-                    });
-                } else {
-                    throw new RuntimeException("At least of one Pet is mandatory");
-                }
-            }
-            return super.save(obj);
-        } else {
-            throw new RuntimeException("Owner must not be null");
-        }
+        return super.save(obj);
     }
 
     @Override

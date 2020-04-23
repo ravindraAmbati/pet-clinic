@@ -40,24 +40,7 @@ public class VetServiceMap extends AbstractMapRepository<Vet, Long> implements V
 
     @Override
     public Vet save(Vet obj) {
-        if (null != obj) {
-            if (null == obj.getId()) {
-                obj.setId(super.getNextId());
-            }
-            if (null != obj.getSpecialities() && obj.getSpecialities().size() > 0) {
-                obj.getSpecialities().forEach(speciality -> {
-                    if (null != speciality) {
-                        specialityService.save(speciality);
-                    }
-                });
-            } else {
-                throw new RuntimeException("At least of one Specialist is required");
-            }
-            return super.save(obj);
-        } else {
-            throw new RuntimeException("Vet must not be null");
-        }
-
+        return super.save(obj);
     }
 
     public long count() {
