@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.util.Set;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
@@ -14,6 +13,12 @@ import java.util.Set;
 @Entity
 @Table(name = "vets")
 public class Vet extends Person {
+
+    @Builder
+    public Vet(String firstName, String lastName, Set<Speciality> specialities) {
+        super(firstName, lastName);
+        this.specialities = specialities;
+    }
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "vet_specialities",

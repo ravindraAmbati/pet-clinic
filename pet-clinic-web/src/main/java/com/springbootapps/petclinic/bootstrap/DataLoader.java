@@ -27,110 +27,67 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        Owner owner = new Owner();
-        owner.setFirstName("Leo");
-        owner.setLastName("Novo");
-        owner.setAddress("Canada Square");
-        owner.setCity("London");
-        owner.setTelephone("+11 987456320");
+        Owner owner = Owner.builder().firstName("Leo").lastName("Novo").address("Canada Square").city("London").telephone("+11 987456320").build();
         ownerService.save(owner);
 
-        Owner owner1 = new Owner();
-        owner1.setFirstName("Intell");
-        owner1.setLastName("Jackson");
-        owner1.setAddress("Wall Street #2");
-        owner1.setCity("New York");
-        owner1.setTelephone("+1 326548970");
+        Owner owner1 = Owner.builder().firstName("Intell").lastName("Jackson").address("Wall Street #2").city("New York").telephone("+1 326548970").build();
         ownerService.save(owner1);
 
-        PetType dog = new PetType();
-        dog.setName("Dog");
+        PetType dog = PetType.builder().name("Dog").build();
         petTypeService.save(dog);
 
-        PetType cat = new PetType();
-        cat.setName("Cat");
+        PetType cat = PetType.builder().name("Cat").build();
         petTypeService.save(cat);
 
-        Pet pet1 = new Pet();
-        pet1.setName("Dog Bark");
-        pet1.setPetType(dog);
-        pet1.setBirthDate(LocalDate.of(2010, 10, 10));
-        pet1.setOwner(owner1);
+        Pet pet1 = Pet.builder().name("Dog Bark").petType(dog).birthDate(LocalDate.of(2010, 10, 10)).owner(owner1).build();
         petService.save(pet1);
 
-        Pet pet2 = new Pet();
-        pet2.setName("Cat Meow");
-        pet2.setPetType(cat);
-        pet2.setBirthDate(LocalDate.of(2018, 8, 12));
-        pet2.setOwner(owner);
+        Pet pet2 = Pet.builder().name("Cat Meow").petType(cat).birthDate(LocalDate.of(2018, 8, 12)).owner(owner).build();
         petService.save(pet2);
 
-        Pet pet3 = new Pet();
-        pet3.setName("Jimmy Bark");
-        pet3.setPetType(dog);
-        pet3.setBirthDate(LocalDate.of(2020, 1, 10));
-        pet3.setOwner(owner1);
+        Pet pet3 = Pet.builder().name("Jimmy Bark").petType(dog).birthDate(LocalDate.of(2020, 1, 10)).owner(owner1).build();
         petService.save(pet3);
 
-        Pet pet4 = new Pet();
-        pet4.setName("Mimmy Meow");
-        pet4.setPetType(cat);
-        pet4.setBirthDate(LocalDate.of(2019, 3, 31));
-        pet4.setOwner(owner);
+        Pet pet4 = Pet.builder().name("Mimmy Meow").petType(cat).birthDate(LocalDate.of(2019, 3, 31)).owner(owner).build();
         petService.save(pet4);
 
-        Speciality speciality1 = new Speciality();
-        speciality1.setDescription("Radiology");
+        Speciality speciality1 = Speciality.builder().description("Radiology").build();
         specialityService.save(speciality1);
 
-        Speciality speciality2 = new Speciality();
-        speciality2.setDescription("Surgeon");
+        Speciality speciality2 = Speciality.builder().description("Surgeon").build();
         specialityService.save(speciality2);
 
-        Speciality speciality3 = new Speciality();
-        speciality3.setDescription("Dentist");
+        Speciality speciality3 = Speciality.builder().description("Dentist").build();
         specialityService.save(speciality3);
 
-        Speciality speciality4 = new Speciality();
-        speciality4.setDescription("Endoscopist");
+        Speciality speciality4 = Speciality.builder().description("Endoscopist").build();
         specialityService.save(speciality4);
 
-        Vet vet = new Vet();
-        vet.setFirstName("Log");
-        vet.setLastName("Tech");
         HashSet<Speciality> specialities = new HashSet<>();
         specialities.add(speciality1);
         specialities.add(speciality2);
-        vet.setSpecialities(specialities);
+
+        Vet vet = Vet.builder().firstName("Log").lastName("Tech").specialities(specialities).build();
         vetService.save(vet);
 
-        Vet vet1 = new Vet();
-        vet1.setFirstName("Job");
-        vet1.setLastName("Less");
         HashSet<Speciality> specialities1 = new HashSet<>();
         specialities1.add(speciality3);
         specialities1.add(speciality4);
-        vet1.setSpecialities(specialities1);
+
+        Vet vet1 = Vet.builder().firstName("Job").lastName("Less").specialities(specialities1).build();
         vetService.save(vet1);
 
-        Visit visit1 = new Visit();
-        visit1.setDate(LocalDate.of(2020, 04, 01));
-        visit1.setPet(pet1);
+
+        Visit visit1 = Visit.builder().date(LocalDate.of(2020, 4, 1)).pet(pet1).build();
         visitService.save(visit1);
 
-        Visit visit2 = new Visit();
-        visit2.setDate(LocalDate.of(2020, 04, 02));
-        visit2.setPet(pet2);
+        Visit visit2 = Visit.builder().date(LocalDate.of(2020, 4, 2)).pet(pet2).build();
         visitService.save(visit2);
 
-        Visit visit3 = new Visit();
-        visit3.setDate(LocalDate.of(2020, 04, 03));
-        visit3.setPet(pet3);
+        Visit visit3 = Visit.builder().date(LocalDate.of(2020, 4, 3)).pet(pet3).build();
         visitService.save(visit3);
 
-        Visit visit4 = new Visit();
-        visit4.setDate(LocalDate.of(2020, 04, 04));
-        visit4.setPet(pet4);
+        Visit visit4 = Visit.builder().date(LocalDate.of(2020, 4, 4)).pet(pet3).build();
         visitService.save(visit4);
 
         log.info(ownerService.count() + "");

@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
@@ -15,6 +14,15 @@ import java.util.Set;
 @Entity
 @Table(name = "owners")
 public class Owner extends Person {
+
+    @Builder
+    public Owner(String firstName, String lastName, String address, String city, String telephone, Set<Pet> pets) {
+        super(firstName, lastName);
+        this.address = address;
+        this.city = city;
+        this.telephone = telephone;
+        this.pets = pets;
+    }
 
     @Column(name = "address")
     private String address;

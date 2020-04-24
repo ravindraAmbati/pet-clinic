@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
@@ -14,6 +13,13 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "visits")
 public class Visit extends BaseEntity {
+
+    @Builder
+    public Visit(LocalDate date, String description, Pet pet) {
+        this.date = date;
+        this.description = description;
+        this.pet = pet;
+    }
 
     @Column(name = "date")
     private LocalDate date;

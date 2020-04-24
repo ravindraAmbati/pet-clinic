@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
@@ -16,6 +15,15 @@ import java.util.Set;
 @Entity
 @Table(name = "pets")
 public class Pet extends BaseEntity {
+
+    @Builder
+    public Pet(String name, PetType petType, Owner owner, LocalDate birthDate, Set<Visit> visits) {
+        this.name = name;
+        this.petType = petType;
+        this.owner = owner;
+        this.birthDate = birthDate;
+        this.visits = visits;
+    }
 
     @Column(name = "name")
     private String name;

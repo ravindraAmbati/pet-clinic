@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
@@ -15,6 +14,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "types")
 public class PetType extends BaseEntity {
+
+    @Builder
+    public PetType(String name) {
+        this.name = name;
+    }
 
     @Column(name = "name")
     private String name;
