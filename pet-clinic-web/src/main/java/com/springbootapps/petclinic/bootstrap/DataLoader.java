@@ -28,40 +28,40 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) {
 
         Owner owner = Owner.builder().firstName("Leo").lastName("Novo").address("Canada Square").city("London").telephone("+11 987456320").build();
-        ownerService.save(owner);
+//        ownerService.save(owner);
 
         Owner owner1 = Owner.builder().firstName("Intell").lastName("Jackson").address("Wall Street #2").city("New York").telephone("+1 326548970").build();
-        ownerService.save(owner1);
+//        ownerService.save(owner1);
 
         PetType dog = PetType.builder().name("Dog").build();
-        petTypeService.save(dog);
+//        petTypeService.save(dog);
 
         PetType cat = PetType.builder().name("Cat").build();
-        petTypeService.save(cat);
+//        petTypeService.save(cat);
 
         Pet pet1 = Pet.builder().name("Dog Bark").petType(dog).birthDate(LocalDate.of(2010, 10, 10)).owner(owner1).build();
-        petService.save(pet1);
+//        petService.save(pet1);
 
         Pet pet2 = Pet.builder().name("Cat Meow").petType(cat).birthDate(LocalDate.of(2018, 8, 12)).owner(owner).build();
-        petService.save(pet2);
+//        petService.save(pet2);
 
         Pet pet3 = Pet.builder().name("Jimmy Bark").petType(dog).birthDate(LocalDate.of(2020, 1, 10)).owner(owner1).build();
-        petService.save(pet3);
+//        petService.save(pet3);
 
         Pet pet4 = Pet.builder().name("Mimmy Meow").petType(cat).birthDate(LocalDate.of(2019, 3, 31)).owner(owner).build();
-        petService.save(pet4);
+//        petService.save(pet4);
 
         Speciality speciality1 = Speciality.builder().description("Radiology").build();
-        specialityService.save(speciality1);
+//        specialityService.save(speciality1);
 
         Speciality speciality2 = Speciality.builder().description("Surgeon").build();
-        specialityService.save(speciality2);
+//        specialityService.save(speciality2);
 
         Speciality speciality3 = Speciality.builder().description("Dentist").build();
-        specialityService.save(speciality3);
+//        specialityService.save(speciality3);
 
         Speciality speciality4 = Speciality.builder().description("Endoscopist").build();
-        specialityService.save(speciality4);
+//        specialityService.save(speciality4);
 
         HashSet<Speciality> specialities = new HashSet<>();
         specialities.add(speciality1);
@@ -87,7 +87,7 @@ public class DataLoader implements CommandLineRunner {
         Visit visit3 = Visit.builder().date(LocalDate.of(2020, 4, 3)).pet(pet3).build();
         visitService.save(visit3);
 
-        Visit visit4 = Visit.builder().date(LocalDate.of(2020, 4, 4)).pet(pet3).build();
+        Visit visit4 = Visit.builder().date(LocalDate.of(2020, 4, 4)).pet(pet4).build();
         visitService.save(visit4);
 
         log.info(ownerService.count() + "");
