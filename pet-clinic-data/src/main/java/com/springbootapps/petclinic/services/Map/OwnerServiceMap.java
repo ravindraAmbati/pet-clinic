@@ -2,8 +2,6 @@ package com.springbootapps.petclinic.services.Map;
 
 import com.springbootapps.petclinic.model.Owner;
 import com.springbootapps.petclinic.services.OwnerService;
-import com.springbootapps.petclinic.services.PetService;
-import com.springbootapps.petclinic.services.PetTypeService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +10,6 @@ import java.util.Set;
 @Profile({"default", "mapService"})
 @Service
 public class OwnerServiceMap extends AbstractMapRepository<Owner, Long> implements OwnerService {
-
-    private final PetTypeService petTypeService;
-    private final PetService petService;
-
-    public OwnerServiceMap(PetTypeService petTypeService, PetService petService) {
-        this.petTypeService = petTypeService;
-        this.petService = petService;
-    }
 
     @Override
     public Owner findById(Long id) {

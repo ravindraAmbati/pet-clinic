@@ -1,9 +1,15 @@
 package com.springbootapps.petclinic.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
 
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Data
 @Entity
 @Table(name = "visits")
 public class Visit extends BaseEntity {
@@ -17,39 +23,4 @@ public class Visit extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Pet getPet() {
-        return pet;
-    }
-
-    public void setPet(Pet pet) {
-        HashSet<Visit> singleVisit = new HashSet<>(1);
-        pet.setVisits(singleVisit);
-        this.pet = pet;
-    }
-
-    @Override
-    public String toString() {
-        return "Visit{" +
-                "date=" + date +
-                ", description='" + description + '\'' +
-                ", pet=" + pet +
-                "} " + super.toString();
-    }
 }

@@ -1,7 +1,6 @@
 package com.springbootapps.petclinic.services.Map;
 
 import com.springbootapps.petclinic.model.Visit;
-import com.springbootapps.petclinic.services.OwnerService;
 import com.springbootapps.petclinic.services.VisitService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -11,12 +10,6 @@ import java.util.Set;
 @Profile({"default", "mapService"})
 @Service
 public class VisitServiceMap extends AbstractMapRepository<Visit, Long> implements VisitService {
-
-    private final OwnerService ownerService;
-
-    public VisitServiceMap(OwnerService ownerService) {
-        this.ownerService = ownerService;
-    }
 
     @Override
     public Visit findById(Long id) {

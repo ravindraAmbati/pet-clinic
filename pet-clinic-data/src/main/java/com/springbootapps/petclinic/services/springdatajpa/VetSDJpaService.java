@@ -1,28 +1,21 @@
 package com.springbootapps.petclinic.services.springdatajpa;
 
 import com.springbootapps.petclinic.model.Vet;
-import com.springbootapps.petclinic.repositories.SpecialityRepository;
 import com.springbootapps.petclinic.repositories.VetRepository;
 import com.springbootapps.petclinic.services.VetService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
-
+@RequiredArgsConstructor
 @Service
 @Profile("SDJpaService")
 public class VetSDJpaService implements VetService {
 
     private final VetRepository vetRepository;
-    private final SpecialityRepository specialityRepository;
-
-    public VetSDJpaService(VetRepository vetRepository, SpecialityRepository specialityRepository) {
-        this.vetRepository = vetRepository;
-        this.specialityRepository = specialityRepository;
-    }
-
 
     @Override
     public Vet findById(Long aLong) {

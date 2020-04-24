@@ -4,6 +4,7 @@ import com.springbootapps.petclinic.model.*;
 import com.springbootapps.petclinic.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -27,6 +28,7 @@ public class DataLoader implements CommandLineRunner {
         this.visitService = visitService;
     }
 
+    @Transactional
     @Override
     public void run(String... args) {
 

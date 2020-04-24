@@ -3,21 +3,19 @@ package com.springbootapps.petclinic.services.springdatajpa;
 import com.springbootapps.petclinic.model.PetType;
 import com.springbootapps.petclinic.repositories.PetTypeRepository;
 import com.springbootapps.petclinic.services.PetTypeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@RequiredArgsConstructor
 @Service
 @Profile("SDJpaService")
 public class PetTypeSDJpaService implements PetTypeService {
 
     private final PetTypeRepository petTypeRepository;
-
-    public PetTypeSDJpaService(PetTypeRepository petTypeRepository) {
-        this.petTypeRepository = petTypeRepository;
-    }
 
     @Override
     public PetType findByName(String name) {

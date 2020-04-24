@@ -10,6 +10,7 @@ import java.util.Set;
 @Profile({"default", "mapService"})
 @Service
 public class PetTypeServiceMap extends AbstractMapRepository<PetType, Long> implements PetTypeService {
+
     @Override
     public PetType findById(Long id) {
         return super.findById(id);

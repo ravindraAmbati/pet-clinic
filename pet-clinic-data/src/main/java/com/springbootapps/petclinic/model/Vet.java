@@ -1,8 +1,15 @@
 package com.springbootapps.petclinic.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Data
 @Entity
 @Table(name = "vets")
 public class Vet extends Person {
@@ -12,19 +19,4 @@ public class Vet extends Person {
             joinColumns = @JoinColumn(name = "vet_id"),
             inverseJoinColumns = @JoinColumn(name = "speciality_id"))
     private Set<Speciality> specialities;
-
-    public Set<Speciality> getSpecialities() {
-        return specialities;
-    }
-
-    public void setSpecialities(Set<Speciality> specialities) {
-        this.specialities = specialities;
-    }
-
-    @Override
-    public String toString() {
-        return "Vet{" +
-                "specialities=" + specialities +
-                "} " + super.toString();
-    }
 }

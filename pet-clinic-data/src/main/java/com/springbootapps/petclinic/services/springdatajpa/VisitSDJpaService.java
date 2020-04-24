@@ -2,25 +2,20 @@ package com.springbootapps.petclinic.services.springdatajpa;
 
 import com.springbootapps.petclinic.model.Visit;
 import com.springbootapps.petclinic.repositories.VisitRepository;
-import com.springbootapps.petclinic.services.OwnerService;
 import com.springbootapps.petclinic.services.VisitService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@RequiredArgsConstructor
 @Service
 @Profile("SDJpaService")
 public class VisitSDJpaService implements VisitService {
 
     private final VisitRepository visitRepository;
-    private final OwnerService ownerService;
-
-    public VisitSDJpaService(VisitRepository visitRepository, OwnerService ownerService) {
-        this.visitRepository = visitRepository;
-        this.ownerService = ownerService;
-    }
 
     @Override
     public Visit findById(Long aLong) {
