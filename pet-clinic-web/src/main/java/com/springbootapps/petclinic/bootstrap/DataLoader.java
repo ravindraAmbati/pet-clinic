@@ -2,6 +2,8 @@ package com.springbootapps.petclinic.bootstrap;
 
 import com.springbootapps.petclinic.model.*;
 import com.springbootapps.petclinic.services.*;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.HashSet;
 
+@Slf4j
+@RequiredArgsConstructor
 @Component
 public class DataLoader implements CommandLineRunner {
 
@@ -18,15 +22,6 @@ public class DataLoader implements CommandLineRunner {
     private final PetTypeService petTypeService;
     private final SpecialityService specialityService;
     private final VisitService visitService;
-
-    public DataLoader(OwnerService ownerService, VetService vetService, PetService petService, PetTypeService petTypeService, SpecialityService specialityService, VisitService visitService) {
-        this.ownerService = ownerService;
-        this.vetService = vetService;
-        this.petService = petService;
-        this.petTypeService = petTypeService;
-        this.specialityService = specialityService;
-        this.visitService = visitService;
-    }
 
     @Transactional
     @Override
@@ -138,12 +133,17 @@ public class DataLoader implements CommandLineRunner {
         visit4.setPet(pet4);
         visitService.save(visit4);
 
-        System.out.println("### " + ownerService.count() + " ###  " + ownerService.findAll() + " ###");
-        System.out.println("### " + specialityService.count() + " ###  " + specialityService.findAll() + " ###");
-        System.out.println("### " + vetService.count() + " ###  " + vetService.findAll() + " ###");
-        System.out.println("### " + petService.count() + " ###  " + petService.findAll() + " ###");
-        System.out.println("### " + petTypeService.count() + " ###  " + petTypeService.findAll() + " ###");
-        System.out.println("### " + visitService.count() + " ###  " + visitService.findAll() + " ###");
-
+        log.info(ownerService.count() + "");
+        ownerService.findAll().forEach(owner2 -> log.info(owner2.toString()));
+        log.info(petTypeService.count() + "");
+        petTypeService.findAll().forEach(petType -> log.info(petType.toString()));
+        log.info(petService.count() + "");
+        petService.findAll().forEach(pet -> log.info(pet.toString()));
+        log.info(specialityService.count() + "");
+        specialityService.findAll().forEach(speciality -> log.info(speciality.toString()));
+        log.info(vetService.count() + "");
+        vetService.findAll().forEach(vet2 -> log.info(vet2.toString()));
+        log.info(visitService.count() + "");
+        visitService.findAll().forEach(visit -> log.info(visit.toString()));
     }
 }

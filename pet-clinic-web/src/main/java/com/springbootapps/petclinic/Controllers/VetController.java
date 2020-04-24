@@ -1,24 +1,23 @@
 package com.springbootapps.petclinic.Controllers;
 
 import com.springbootapps.petclinic.services.VetService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Slf4j
+@RequiredArgsConstructor
 @RequestMapping({"/vets", "/vets.html"})
 @Controller
 public class VetController {
 
     private final VetService vetService;
 
-    public VetController(VetService vetService) {
-        this.vetService = vetService;
-    }
-
-
     @RequestMapping({"", "/", "/index", "/index.html"})
     public String getList(Model model) {
-        System.out.println("### " + vetService.findAll());
+        vetService.findAll().forEach(vet -> log.info(vet.toString()));
         model.addAttribute("vets", vetService.findAll());
         return "vets/index";
     }
