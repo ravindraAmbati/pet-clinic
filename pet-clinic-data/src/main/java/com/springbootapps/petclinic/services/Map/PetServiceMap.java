@@ -2,6 +2,7 @@ package com.springbootapps.petclinic.services.Map;
 
 import com.springbootapps.petclinic.model.Pet;
 import com.springbootapps.petclinic.model.PetType;
+import com.springbootapps.petclinic.services.OwnerService;
 import com.springbootapps.petclinic.services.PetService;
 import com.springbootapps.petclinic.services.PetTypeService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.Set;
 public class PetServiceMap extends AbstractMapRepository<Pet, Long> implements PetService {
 
     private final PetTypeService petTypeService;
-    private final OwnerServiceMap ownerServiceMap;
+    private final OwnerService ownerService;
 
     @Override
     public Pet findById(Long id) {
@@ -67,11 +68,11 @@ public class PetServiceMap extends AbstractMapRepository<Pet, Long> implements P
             }
             if (null != obj.getOwner()) {
                 if (null == obj.getOwner().getId()) {
-                    ownerServiceMap.save(obj.getOwner());
+                    ownerService.save(obj.getOwner());
                     warningMessage = "Owner is not exists with Id: " + obj.getOwner().getId() + " but saved now";
                     log.warn(warningMessage);
                 } else {
-                    if (null != ownerServiceMap.findById(obj.getOwner().getId())) {
+                    if (null != ownerService.findById(obj.getOwner().getId())) {
                         warningMessage = "Owner is already exists with Id: " + obj.getOwner().getId();
                         log.warn(warningMessage);
                     } else {
