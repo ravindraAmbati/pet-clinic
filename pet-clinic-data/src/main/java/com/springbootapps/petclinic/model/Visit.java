@@ -1,15 +1,16 @@
 package com.springbootapps.petclinic.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@Data
 @Entity
 @Table(name = "visits")
 public class Visit extends BaseEntity {

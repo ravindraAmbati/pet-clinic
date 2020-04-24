@@ -1,15 +1,16 @@
 package com.springbootapps.petclinic.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@Data
 @Entity
 @Table(name = "vets")
 public class Vet extends Person {
