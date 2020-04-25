@@ -21,6 +21,7 @@
             <artifactId>pet-clinic-data</artifactId>
             <groupId>com.springbootapps</groupId>
             <version>1.0</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>

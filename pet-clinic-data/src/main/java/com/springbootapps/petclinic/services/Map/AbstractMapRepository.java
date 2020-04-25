@@ -28,7 +28,7 @@ public abstract class AbstractMapRepository<T extends BaseEntity, ID extends Lon
     }
 
     void delete(T obj) {
-        map.entrySet().remove(obj);
+        map.entrySet().removeIf(entry -> entry.getValue().equals(obj));
     }
 
     void deleteById(ID id) {
