@@ -10,8 +10,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = false, exclude = {"owner", "visits"})
+@ToString(callSuper = false, exclude = {"owner", "visits"})
 @Entity
 @Table(name = "pets")
 public class Pet extends BaseEntity {

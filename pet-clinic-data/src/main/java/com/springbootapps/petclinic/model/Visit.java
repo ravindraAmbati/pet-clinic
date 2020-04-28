@@ -8,8 +8,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = false, exclude = {"pet"})
+@ToString(callSuper = false, exclude = {"pet"})
 @Entity
 @Table(name = "visits")
 public class Visit extends BaseEntity {
