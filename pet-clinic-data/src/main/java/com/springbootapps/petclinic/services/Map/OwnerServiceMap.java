@@ -5,6 +5,7 @@ import com.springbootapps.petclinic.services.OwnerService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Profile({"default", "mapService"})
@@ -39,6 +40,12 @@ public class OwnerServiceMap extends AbstractMapRepository<Owner, Long> implemen
     @Override
     public Owner findByLastName(String lastName) {
         throw new UnsupportedOperationException("findByLastName() is not supported");
+    }
+
+    @Override
+    public List<Owner> findAllByLastNameLike(String lastName) {
+        //todo implement findAllByLastNameLike()
+        return null;
     }
 
     public long count() {

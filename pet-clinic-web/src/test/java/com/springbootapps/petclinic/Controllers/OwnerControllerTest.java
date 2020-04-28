@@ -2,9 +2,9 @@ package com.springbootapps.petclinic.Controllers;
 
 import com.springbootapps.petclinic.model.Owner;
 import com.springbootapps.petclinic.services.OwnerService;
+import edu.emory.mathcs.backport.java.util.Arrays;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -16,8 +16,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.MapBindingResult;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -87,51 +91,66 @@ class OwnerControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/owners"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("owners/ownersList"));
+                .andExpect(MockMvcResultMatchers.view().name("owners/ownersList"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("owners"));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/owners/index"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("owners/ownersList"));
+                .andExpect(MockMvcResultMatchers.view().name("owners/ownersList"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("owners"));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/owners/index.html"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("owners/ownersList"));
+                .andExpect(MockMvcResultMatchers.view().name("owners/ownersList"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("owners"));
     }
 
-    @Disabled
     @Test
-    void findOwnersByLastName_NotNull() throws Exception {
+    void findOwnersByLastName_None() throws Exception {
 
         //given
-        Owner expected = owner1;
-
+        Map<String, String> target = new HashMap<>();
+        String objectName = "Error";
+        BindingResult bindingResult = new MapBindingResult(target, objectName);
         //when
-        when(ownerService.findByLastName(expected.getLastName())).thenReturn(expected);
-        ArgumentCaptor<Owner> argumentCaptor = ArgumentCaptor.forClass(Owner.class);
-
+        when(ownerService.findAllByLastNameLike("")).thenReturn(Arrays.asList(new Owner[]{}));
         //then
-        assertEquals("NotImplYet", testClass.findOwnersByLastName(expected.getLastName(), model));
-        verify(model, times(1)).addAttribute(eq("owners"), argumentCaptor.capture());
+        assertEquals("redirect:/owners/findOwner", testClass.processFindOwner(new Owner(), bindingResult, model));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/findOwner").param("lastName", lastName1)).andReturn().getResponse();
-//                .andExpect(MockMvcResultMatchers.status().isOk())
-//                .andExpect(MockMvcResultMatchers.view().name("NotImplYet"));
-    }
-
-    @Disabled
-    @Test
-    void findOwnersByLastName_Null() throws Exception {
-
-        //given
-
-        //when
-
-        //then
-        assertEquals("redirect: owners/", testClass.findOwnersByLastName(null, model));
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/findOwner?lastName="))
+        mockMvc.perform(MockMvcRequestBuilders.get("/owners/findOwner").param("lastName", owner1.getLastName()))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.view().name("owners/ownersList"));
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/owners/findOwner"));
+    }
+
+    @Test
+    void findOwnersByLastName_One() throws Exception {
+
+        //given
+        BindingResult bindingResult = null;
+        //when
+        when(ownerService.findAllByLastNameLike(owner1.getLastName())).thenReturn(Arrays.asList(new Owner[]{owner1}));
+        //then
+        assertEquals("redirect:/owners/" + owner1.getId(), testClass.processFindOwner(owner1, bindingResult, model));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/owners/findOwner").param("lastName", owner1.getLastName()))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/owners/" + owner1.getId()));
+    }
+
+    @Test
+    void findOwnersByLastName_Many() throws Exception {
+
+        //given
+        BindingResult bindingResult = null;
+        //when
+        when(ownerService.findAllByLastNameLike(owner1.getLastName())).thenReturn(Arrays.asList(new Owner[]{owner2, owner1}));
+        //then
+        assertEquals("owners/ownersList", testClass.processFindOwner(owner1, bindingResult, model));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/owners/findOwner").param("lastName", owner1.getLastName()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("owners/ownersList"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("owners"));
     }
 
     @Test
@@ -145,7 +164,8 @@ class OwnerControllerTest {
         verify(model, times(1)).addAttribute(eq("owner"), argumentCaptor.capture());
         mockMvc.perform(MockMvcRequestBuilders.get("/owners/find"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("owners/findOwners"));
+                .andExpect(MockMvcResultMatchers.view().name("owners/findOwners"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("owner"));
     }
 
     @Test
@@ -167,6 +187,7 @@ class OwnerControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/owners/" + 1))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("owners/ownerDetails"));
+                .andExpect(MockMvcResultMatchers.view().name("owners/ownerDetails"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("owner"));
     }
 }
