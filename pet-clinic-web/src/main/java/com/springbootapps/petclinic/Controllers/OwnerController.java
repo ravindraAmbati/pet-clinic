@@ -26,7 +26,7 @@ public class OwnerController {
             model.addAttribute("owners", ownerService.findAll());
             return "owners/ownersList";
         } else {
-            return "owners/NotImplYet";
+            return "NotImplYet";
         }
 
     }

@@ -81,7 +81,7 @@ class OwnerControllerTest {
         assertEquals(2, actual.size());
         assertEquals(expected, actual);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/owners/"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/owners?lastName="))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("owners/ownersList"));
     }
@@ -91,24 +91,15 @@ class OwnerControllerTest {
 
         Owner owner = Owner.builder().lastName("Novo").build();
         //given
-        Set<Owner> expected = owners;
 
         //when
-        when(ownerService.findAll()).thenReturn(expected);
-        ArgumentCaptor<Set<Owner>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
 
         //then
-        assertEquals("owners/NotImplYet", testClass.getList(owner.getLastName(), model));
-        verify(ownerService, times(0)).findAll();
-        verify(model, times(0)).addAttribute(eq("owners"), argumentCaptor.capture());
-        Set<Owner> actual = argumentCaptor.getValue();
-        assertEquals(expected.size(), actual.size());
-        assertEquals(2, actual.size());
-        assertEquals(expected, actual);
+        assertEquals("NotImplYet", testClass.getList(owner.getLastName(), model));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/owners?lastName=Novo"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("owners/NotImplYet"));
+                .andExpect(MockMvcResultMatchers.view().name("NotImplYet"));
     }
 
     @Test
