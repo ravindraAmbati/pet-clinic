@@ -19,13 +19,19 @@ public class OwnerController {
 
     private final OwnerService ownerService;
 
-    @RequestMapping(value = {"", "/", "/index", "/index.html"}, method = RequestMethod.GET)
-    public String getList(@RequestParam String lastName, Model model) {
-        if (null == lastName) {
-            ownerService.findAll().forEach(owner -> log.info(owner.toString()));
-            model.addAttribute("owners", ownerService.findAll());
-            return "owners/ownersList";
+    @RequestMapping(value = {"", "/", "/index", "/index.html"})
+    public String getList(Model model) {
+        ownerService.findAll().forEach(owner -> log.info(owner.toString()));
+        model.addAttribute("owners", ownerService.findAll());
+        return "owners/ownersList";
+    }
+
+    @RequestMapping(value = {"/findOwner"}, method = RequestMethod.GET)
+    public String findOwnersByLastName(@RequestParam String lastName, Model model) {
+        if (null == lastName || lastName.isEmpty()) {
+            return "redirect:/owners/index";
         } else {
+            model.addAttribute("owners", ownerService.findByLastName(lastName));
             return "NotImplYet";
         }
 
