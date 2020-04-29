@@ -9,8 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -21,22 +23,12 @@ public class OwnerController {
 
     private final OwnerService ownerService;
 
-    @RequestMapping(value = {"", "/", "/index", "/index.html"})
+    @GetMapping(value = {"", "/", "/index", "/index.html"})
     public String getList(Model model) {
         ownerService.findAll().forEach(owner -> log.info(owner.toString()));
         model.addAttribute("owners", ownerService.findAll());
         return "owners/ownersList";
     }
-
-//    @RequestMapping(value = {"/findOwner"}, method = RequestMethod.GET)
-//    public String findOwnersByLastName(@RequestParam String lastName, Model model) {
-//        if (null == lastName || lastName.isEmpty()) {
-//            return "redirect:/owners/index";
-//        } else {
-//            model.addAttribute("owners", ownerService.findByLastName(lastName));
-//            return "NotImplYet";
-//        }
-//    }
 
     @GetMapping("/findOwner")
     public String processFindOwner(Owner owner, BindingResult bindingResult, Model model) {
@@ -55,13 +47,13 @@ public class OwnerController {
         }
     }
 
-    @RequestMapping({"/find"})
+    @GetMapping({"/find"})
     public String find(Model model) {
         model.addAttribute("owner", new Owner());
         return "owners/findOwners";
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public String getOwnerDetails(@PathVariable String id, Model model) {
         Owner owner = ownerService.findById(Long.valueOf(id));
         if (null != owner) {
@@ -69,6 +61,45 @@ public class OwnerController {
             return "owners/ownerDetails";
         } else {
             throw new RuntimeException(String.format("Requested Owner of id: %s is not found", id));
+        }
+    }
+
+
+    @GetMapping("/new")
+    public String initCreateOwner(Model model) {
+        model.addAttribute("owner", Owner.builder().build());
+        return "owners/createOrUpdateOwnerForm";
+    }
+
+    @PostMapping("/new")
+    public String processCreateOwner(@Valid Owner owner, BindingResult result) {
+        if (null != owner && !result.hasErrors()) {
+            Owner savedOwner = ownerService.save(owner);
+            return "redirect:/owners/" + savedOwner.getId();
+        } else {
+            return "redirect:/owners/new";
+        }
+    }
+
+    @GetMapping("/{id}/edit")
+    public String initUpdateOwner(@PathVariable String id, Model model) {
+        Owner foundOwner = ownerService.findById(Long.valueOf(id));
+        if (null != foundOwner) {
+            model.addAttribute("owner", foundOwner);
+            return "owners/createOrUpdateOwnerForm";
+        } else {
+            return "redirect:/owners/new";
+        }
+    }
+
+    @PostMapping("/{id}/edit")
+    public String processUpdateOwner(@PathVariable String id, @Valid Owner owner, BindingResult result) {
+        Owner foundOwner = ownerService.findById(Long.valueOf(id));
+        if (null != foundOwner && null != owner && !result.hasErrors()) {
+            Owner savedOwner = ownerService.save(owner);
+            return "redirect:/owners/" + savedOwner.getId();
+        } else {
+            return "redirect:/owners/new";
         }
     }
 }

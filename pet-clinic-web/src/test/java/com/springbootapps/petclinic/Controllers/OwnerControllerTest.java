@@ -5,12 +5,14 @@ import com.springbootapps.petclinic.services.OwnerService;
 import edu.emory.mathcs.backport.java.util.Arrays;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -115,11 +117,11 @@ class OwnerControllerTest {
         //when
         when(ownerService.findAllByLastNameLike("")).thenReturn(Arrays.asList(new Owner[]{}));
         //then
-        assertEquals("redirect:/owners/findOwner", testClass.processFindOwner(new Owner(), bindingResult, model));
+        assertEquals("redirect:/owners/find", testClass.processFindOwner(new Owner(), bindingResult, model));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/owners/findOwner").param("lastName", owner1.getLastName()))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.view().name("redirect:/owners/findOwner"));
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/owners/find"));
     }
 
     @Test
@@ -185,9 +187,99 @@ class OwnerControllerTest {
         Owner actual = argumentCaptor.getValue();
         assertEquals(expected, actual);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/owners/" + 1))
+        mockMvc.perform(MockMvcRequestBuilders.get("/owners/{id}", 1))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("owners/ownerDetails"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("owner"));
+    }
+
+    @Test
+    void initCreateOwner() throws Exception {
+
+        //given
+
+        //when
+
+        //then
+        assertEquals("owners/createOrUpdateOwnerForm", testClass.initCreateOwner(model));
+        verify(model, times(1)).addAttribute(eq("owner"), isA(Owner.class));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/owners/new"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("owners/createOrUpdateOwnerForm"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("owner"));
+
+    }
+
+    @Disabled
+    @Test
+    void processCreateOwner() throws Exception {
+
+        //given
+        Owner owner = Owner.builder().build();
+        Owner expected = owner1;
+        Map<String, String> target = new HashMap<>();
+        String objectName = "Error";
+        BindingResult bindingResult = new MapBindingResult(target, objectName);
+
+        //when
+        when(ownerService.save(owner1)).thenReturn(owner1);
+        ArgumentCaptor<Owner> argumentCaptor = ArgumentCaptor.forClass(Owner.class);
+
+        //then
+        assertEquals("redirect:/owners/" + owner1.getId(), testClass.processCreateOwner(owner1, bindingResult));
+        verify(ownerService, times(1)).save(argumentCaptor.capture());
+        Owner actual = argumentCaptor.getValue();
+        assertEquals(expected, actual);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/owners/new").content(owner1.toString()).contentType(MediaType.TEXT_PLAIN))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("owners/createOrUpdateOwnerForm"));
+
+    }
+
+    @Test
+    void initUpdateOwner() throws Exception {
+
+        //given
+
+        //when
+
+        //then
+        assertEquals("redirect:/owners/new", testClass.initUpdateOwner("1", model));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/owners/{id}/edit", 1))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/owners/new"));
+
+    }
+
+    @Disabled
+    @Test
+    void processUpdateOwner() throws Exception {
+
+        //given
+        Owner owner = Owner.builder().build();
+        Owner expected = owner1;
+        Map<String, String> target = new HashMap<>();
+        String objectName = "Error";
+        BindingResult bindingResult = new MapBindingResult(target, objectName);
+
+        //when
+        when(ownerService.findById(1L)).thenReturn(owner1);
+        when(ownerService.save(owner1)).thenReturn(owner1);
+        ArgumentCaptor<Owner> argumentCaptor = ArgumentCaptor.forClass(Owner.class);
+
+        //then
+        assertEquals("redirect:/owners/1", testClass.processUpdateOwner("1", owner1, bindingResult));
+        verify(ownerService, times(1)).findById(isA(Long.class));
+        verify(ownerService, times(1)).save(argumentCaptor.capture());
+        Owner actual = argumentCaptor.getValue();
+        assertEquals(expected, actual);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/owners/{id}/edit", 1).content(owner1.toString()).contentType(MediaType.TEXT_PLAIN))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("owners/createOrUpdateOwnerForm"));
+
     }
 }
