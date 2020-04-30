@@ -1,4 +1,4 @@
-<html>
+<html xmlns:th="https://www.thymeleaf.org">
 <body>
 <form>
     <th:block th:fragment="input (label, name, type)">
@@ -13,7 +13,7 @@
                            pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"
                            placeholder="YYYY-MM-DD" th:case="'date'"
                            th:field="*{__${name}__}" title="Enter a date in this format: YYYY-MM-DD"
-                           type="text"/>
+                           type="date"/>
                 </div>
                 <span aria-hidden="true"
                       class="glyphicon glyphicon-ok form-control-feedback"

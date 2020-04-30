@@ -1,4 +1,4 @@
-package com.springbootapps.petclinic.Controllers;
+package com.springbootapps.petclinic.controllers;
 
 import com.springbootapps.petclinic.services.VetService;
 import lombok.RequiredArgsConstructor;

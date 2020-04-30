@@ -1,4 +1,4 @@
-package com.springbootapps.petclinic.Controllers;
+package com.springbootapps.petclinic.controllers;
 
 import com.springbootapps.petclinic.model.Owner;
 import com.springbootapps.petclinic.services.OwnerService;
@@ -69,6 +69,12 @@ class OwnerControllerTest {
     @AfterEach
     void tearDown() {
         owners = null;
+        id1 = null;
+        id2 = null;
+        lastName1 = null;
+        lastName2 = null;
+        owner1 = null;
+        owner2 = null;
         mockMvc = null;
     }
 

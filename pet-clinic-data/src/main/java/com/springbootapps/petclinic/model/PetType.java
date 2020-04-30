@@ -12,11 +12,12 @@ import javax.persistence.Table;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Entity
-@Table(name = "types")
+@Table(name = "petTypes")
 public class PetType extends BaseEntity {
 
     @Builder
-    public PetType(String name) {
+    public PetType(Long id, String name) {
+        super(id);
         this.name = name;
     }
 
