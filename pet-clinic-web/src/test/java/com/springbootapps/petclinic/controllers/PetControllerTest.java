@@ -37,7 +37,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class PetControllerTest {
 
-    private static final String VIEW_PET_CREATION_FORM = "createOrUpdatePetForm";
+    private static final String VIEW_PET_CREATION_FORM = "pets/createOrUpdatePetForm";
 
     @Mock
     OwnerService ownerService;
@@ -150,4 +150,50 @@ public class PetControllerTest {
 
     }
 
+    @Test
+    void initUpdatePet() throws Exception {
+
+        //given
+
+        //when
+        when(petService.findById(id1)).thenReturn(pet1);
+
+        //then
+        assertEquals(VIEW_PET_CREATION_FORM, testClass.initUpdatePet(String.valueOf(id1), model));
+        verify(model, times(1)).addAttribute(eq("pet"), isA(Pet.class));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/owners/{id}/pets/{id}/edit", 1, 1))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name(VIEW_PET_CREATION_FORM))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("pet"));
+
+    }
+
+    @Disabled
+    @Test
+    void processUpdatePet() throws Exception {
+
+        //given
+        Pet expected = pet1;
+        Map<String, String> target = new HashMap<>();
+        String objectName = "Error";
+        BindingResult bindingResult = new MapBindingResult(target, objectName);
+
+        //when
+        when(petService.findById(id1)).thenReturn(pet1);
+        when(petService.save(pet1)).thenReturn(pet1);
+        when(model.getAttribute("owner")).thenReturn(owner1);
+        ArgumentCaptor<Pet> argumentCaptor = ArgumentCaptor.forClass(Pet.class);
+
+        //then
+        assertEquals("redirect:/owners/" + pet1.getOwner().getId(), testClass.processUpdatePet(String.valueOf(id1), pet1, bindingResult, model));
+        verify(petService, times(1)).save(argumentCaptor.capture());
+        Pet actual = argumentCaptor.getValue();
+        assertEquals(expected, actual);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/owners/{id}/pets/{id}/edit", 1, 1).content(pet1.toString()).contentType(MediaType.TEXT_PLAIN))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name(VIEW_PET_CREATION_FORM));
+
+    }
 }

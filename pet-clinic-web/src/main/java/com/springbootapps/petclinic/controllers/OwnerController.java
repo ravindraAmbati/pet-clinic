@@ -99,6 +99,7 @@ public class OwnerController {
     public String processUpdateOwner(@PathVariable String id, @Valid Owner owner, BindingResult result) {
         Owner foundOwner = ownerService.findById(Long.valueOf(id));
         if (null != foundOwner && null != owner && !result.hasErrors()) {
+            owner.setId(foundOwner.getId());
             Owner savedOwner = ownerService.save(owner);
             return "redirect:/owners/" + savedOwner.getId();
         } else {

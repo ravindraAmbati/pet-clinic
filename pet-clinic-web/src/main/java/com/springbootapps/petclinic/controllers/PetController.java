@@ -14,11 +14,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/owners/{id}/pets")
+@RequestMapping("/owners/{ownerId}/pets")
 @Controller
 public class PetController {
 
@@ -43,13 +44,14 @@ public class PetController {
     }
 
     @ModelAttribute("owner")
-    Owner findById(@PathVariable Long id) {
-        return ownerService.findById(id);
+    Owner findById(@PathVariable Long ownerId) {
+        return ownerService.findById(ownerId);
     }
 
     @GetMapping("/new")
     public String initCreatePet(Model model) {
         model.addAttribute("pet", Pet.builder().owner((Owner) model.getAttribute("owner")).build());
+        model.addAttribute("localDate", LocalDate.now());
         return VIEW_PET_CREATION_FORM;
     }
 
@@ -62,6 +64,37 @@ public class PetController {
             return "redirect:/owners/" + savedPet.getOwner().getId();
         } else {
             return String.format("redirect:/owners/%s/pets/new", owner.getId().toString());
+        }
+    }
+
+    @GetMapping("/{id}/edit")
+    public String initUpdatePet(@PathVariable String id, Model model) {
+        Pet foundPet = Pet.builder().build();
+        if (null != id) {
+            foundPet = petService.findById(Long.valueOf(id));
+        } else {
+            return "redirect:/owners/{id}/pets/new";
+        }
+        model.addAttribute("pet", foundPet);
+        return VIEW_PET_CREATION_FORM;
+    }
+
+    @PostMapping("/{id}/edit")
+    public String processUpdatePet(@PathVariable String id, Pet pet, BindingResult result, Model model) {
+        Pet foundPet = Pet.builder().build();
+        if (null != id) {
+            foundPet = petService.findById(Long.valueOf(id));
+        } else {
+            return "redirect:/owners/{id}/pets/new";
+        }
+        Owner owner = (Owner) model.getAttribute("owner");
+        if (null != foundPet && null != pet && !result.hasErrors()) {
+            pet.setId(foundPet.getId());
+            pet.setOwner(owner);
+            Pet savedPet = petService.save(pet);
+            return "redirect:/owners/" + savedPet.getOwner().getId();
+        } else {
+            return String.format("redirect:/owners/%s/pets/%s/edit", owner.getId().toString(), pet.getId().toString());
         }
     }
 }

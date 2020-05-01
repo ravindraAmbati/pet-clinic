@@ -121,13 +121,13 @@ class OwnerControllerTest {
         String objectName = "Error";
         BindingResult bindingResult = new MapBindingResult(target, objectName);
         //when
-        when(ownerService.findAllByLastNameLike("")).thenReturn(Arrays.asList(new Owner[]{}));
-        //then
-        assertEquals("redirect:/owners/find", testClass.processFindOwner(new Owner(), bindingResult, model));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/owners/findOwner").param("lastName", owner1.getLastName()))
+        //then
+        assertEquals("redirect:/owners/", testClass.processFindOwner(new Owner(), bindingResult, model));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/owners/findOwner").param("lastName", new String("")))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.view().name("redirect:/owners/find"));
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/owners/"));
     }
 
     @Test
