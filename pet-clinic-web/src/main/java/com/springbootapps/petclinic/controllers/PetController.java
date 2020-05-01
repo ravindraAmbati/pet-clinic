@@ -14,7 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import javax.validation.Valid;
 import java.util.Set;
 
 @Slf4j
@@ -51,12 +51,11 @@ public class PetController {
     @GetMapping("/new")
     public String initCreatePet(Model model) {
         model.addAttribute("pet", Pet.builder().owner((Owner) model.getAttribute("owner")).build());
-        model.addAttribute("localDate", LocalDate.now());
         return VIEW_PET_CREATION_FORM;
     }
 
     @PostMapping("/new")
-    public String processCreatePet(Pet pet, BindingResult result, Model model) {
+    public String processCreatePet(@Valid Pet pet, BindingResult result, Model model) {
         Owner owner = (Owner) model.getAttribute("owner");
         if (null != pet && !result.hasErrors()) {
             pet.setOwner(owner);
@@ -80,7 +79,7 @@ public class PetController {
     }
 
     @PostMapping("/{id}/edit")
-    public String processUpdatePet(@PathVariable String id, Pet pet, BindingResult result, Model model) {
+    public String processUpdatePet(@PathVariable String id, @Valid Pet pet, BindingResult result, Model model) {
         Pet foundPet = Pet.builder().build();
         if (null != id) {
             foundPet = petService.findById(Long.valueOf(id));
