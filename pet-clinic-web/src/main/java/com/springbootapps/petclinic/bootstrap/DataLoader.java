@@ -68,28 +68,28 @@ public class DataLoader implements CommandLineRunner {
         vetService.save(vet2);
 
 
-        Visit visit1 = Visit.builder().date(LocalDate.of(2020, 4, 1)).pet(pet1).build();
+        Visit visit1 = Visit.builder().date(LocalDate.of(2020, 4, 1)).pet(pet1).description("General").build();
         visitService.save(visit1);
 
-        Visit visit2 = Visit.builder().date(LocalDate.of(2020, 3, 2)).pet(pet2).build();
+        Visit visit2 = Visit.builder().date(LocalDate.of(2020, 3, 2)).pet(pet2).description("General").build();
         visitService.save(visit2);
 
-        Visit visit3 = Visit.builder().date(LocalDate.of(2020, 2, 3)).pet(pet3).build();
+        Visit visit3 = Visit.builder().date(LocalDate.of(2020, 2, 3)).pet(pet3).description("General").build();
         visitService.save(visit3);
 
-        Visit visit4 = Visit.builder().date(LocalDate.of(2020, 1, 4)).pet(pet4).build();
+        Visit visit4 = Visit.builder().date(LocalDate.of(2020, 1, 4)).pet(pet4).description("General").build();
         visitService.save(visit4);
 
-        Visit visit5 = Visit.builder().date(LocalDate.of(2020, 1, 1)).pet(pet5).build();
+        Visit visit5 = Visit.builder().date(LocalDate.of(2020, 1, 1)).pet(pet5).description("General").build();
         visitService.save(visit5);
 
-        Visit visit6 = Visit.builder().date(LocalDate.of(2020, 2, 2)).pet(pet6).build();
+        Visit visit6 = Visit.builder().date(LocalDate.of(2020, 2, 2)).pet(pet6).description("General").build();
         visitService.save(visit6);
 
-        Visit visit7 = Visit.builder().date(LocalDate.of(2020, 3, 3)).pet(pet7).build();
+        Visit visit7 = Visit.builder().date(LocalDate.of(2020, 3, 3)).pet(pet7).description("General").build();
         visitService.save(visit7);
 
-        Visit visit8 = Visit.builder().date(LocalDate.of(2020, 4, 4)).pet(pet8).build();
+        Visit visit8 = Visit.builder().date(LocalDate.of(2020, 4, 4)).pet(pet8).description("General").build();
         visitService.save(visit8);
 
         log.info(ownerService.count() + "");
