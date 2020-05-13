@@ -22,11 +22,12 @@ import javax.validation.Valid;
 @Controller
 public class VisitController {
 
-    private static final String VIEW = "visits/createOrUpdateVisitForm";
 
     private final OwnerService ownerService;
     private final PetService petService;
     private final VisitService visitService;
+    private static final String VISITS_CREATE_OR_UPDATE_VISIT_FORM = "visits/createOrUpdateVisitForm";
+    private static final String REDIRECT_OWNERS = "redirect:/owners/";
 
     @InitBinder
     public void initOwnerBinder(WebDataBinder dataBinder) {
@@ -52,7 +53,7 @@ public class VisitController {
     public String initCreatePet(Model model) {
         Pet pet = (Pet) model.getAttribute("Pet");
         model.addAttribute("visit", Visit.builder().pet(pet).build());
-        return VIEW;
+        return VISITS_CREATE_OR_UPDATE_VISIT_FORM;
     }
 
     @PostMapping("/new")
@@ -61,7 +62,7 @@ public class VisitController {
         if (null != visit && !result.hasErrors()) {
             visit.setPet(pet);
             Visit savedVisit = visitService.save(visit);
-            return "redirect:/owners/" + savedVisit.getPet().getOwner().getId();
+            return REDIRECT_OWNERS + savedVisit.getPet().getOwner().getId();
         } else {
             return String.format("redirect:/owners/%s/pets/%s/visits/new", pet.getOwner().getId().toString(), pet.getId());
         }

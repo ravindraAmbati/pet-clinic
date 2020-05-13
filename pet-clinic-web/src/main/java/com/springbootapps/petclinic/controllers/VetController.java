@@ -18,12 +18,14 @@ import java.util.Set;
 public class VetController {
 
     private final VetService vetService;
+    private static final String NOT_IMPL_YET = "NotImplYet";
+    private static final String VETS_INDEX = "vets/index";
 
     @RequestMapping({"", "/", "/index", "/index.html"})
     public String getList(Model model) {
         vetService.findAll().forEach(vet -> log.info(vet.toString()));
         model.addAttribute("vets", vetService.findAll());
-        return "vets/index";
+        return VETS_INDEX;
     }
 
     @RequestMapping("/api")
@@ -34,6 +36,6 @@ public class VetController {
 
     @RequestMapping("/find")
     public String getFind() {
-        return "NotImplYet";
+        return NOT_IMPL_YET;
     }
 }
