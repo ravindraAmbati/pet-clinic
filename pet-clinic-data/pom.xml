@@ -9,9 +9,28 @@
 
     <artifactId>pet-clinic-data</artifactId>
     <properties>
+        <project.build.sourceEncoidng>UTF-8</project.build.sourceEncoidng>
+        <project.reporting.sourceEncoidng>UTF-8</project.reporting.sourceEncoidng>
+        <java.version>8</java.version>
+        <jaxb.version>2.3.0</jaxb.version>
         <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>${jaxb.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>${jaxb.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>${jaxb.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
